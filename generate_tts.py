@@ -68,6 +68,7 @@ API_URL = f"https://{HOST}/api/v1/tts"
 # ==================== 分镜逐字稿 ====================
 
 SCENE_SCRIPTS = {
+    "Scene00-Intro": "嗨，我是熊老板i。",
     "Scene01-Title": "看这个项目——Clawdbot，现在改名叫 OpenClaw。",
     "Scene02-Features": "最近在 AI Agent 圈子里非常火。它能接 WhatsApp、Telegram、Slack，能自己发邮件、跑命令、管日历，带持久记忆，还能学新技能。代码量是数十万行级别。",
     "Scene03-TooMuchCode": "但今天我不是来带你读源码的——几十万行，读完黄花菜都凉了。",
@@ -101,7 +102,7 @@ SCENE_SCRIPTS = {
     "Scene38-ReviewIntro": "好，我们快速回顾一下。",
     "Scene39-FourPillars": "Clawdbot 类 Agent 之所以「智能」，不是因为它用了什么魔法模型，而是因为它在架构层面做了四件事：会推理——多轮思考-行动循环，能迭代、能纠错。会主动——心跳和定时任务，没人说话也能干活。会扩展——Skill 声明式技能系统，写文档就能教它新能力。看得准——分层上下文工程，让模型每次都能看到该看的信息。",
     "Scene40-OnePercentSummary": "而 NanoBot 用1%的代码量把这四件事全部跑通了。",
-    "Scene41-Preview": "但是，「会主动」和「会扩展」这两个点，今天只是点到为止。下一集，我会深入拆解 Proactive 主动执行机制和 Skill 技能系统——心跳到底怎么唤醒 Agent？定时任务是怎么持久化和调度的？一个 Skill 从被发现到被使用，中间经历了什么？这是最有意思的部分。我们下集见。",
+    "Scene41-Preview": "但是，「会主动」和「会扩展」这两个点，今天只是点到为止。下一集，我会深入拆解 Proactive 主动执行机制和 Skill 技能系统——心跳到底怎么唤醒 Agent？定时任务是怎么持久化和调度的？一个 Skill 从被发现到被使用，中间经历了什么？这是最有意思的部分，我们下集见.",
 }
 
 

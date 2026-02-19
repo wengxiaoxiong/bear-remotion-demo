@@ -254,7 +254,7 @@ export const SCENE_SUBTITLE_SEGMENTS: Record<string, SceneSubtitles> = {
       { text: '心跳到底怎么唤醒 Agent？', startFrame: 360, endFrame: 440 },
       { text: '定时任务是怎么持久化和调度的？', startFrame: 440, endFrame: 530 },
       { text: '一个 Skill 从被发现到被使用，中间经历了什么？', startFrame: 530, endFrame: 640 },
-      { text: '这是最有意思的部分。我们下集见。', startFrame: 640, endFrame: 697 },
+      { text: '这是最有意思的部分，我们下集见。', startFrame: 640, endFrame: 697 },
     ],
   },
 };

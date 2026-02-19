@@ -1,6 +1,7 @@
 import React from 'react';
 import { Composition, Folder, Audio, staticFile, Series } from 'remotion';
 import {
+  Scene00_Intro,
   Scene01_Title,
   Scene02_Features,
   Scene03_TooMuchCode,
@@ -76,6 +77,10 @@ const SceneWithAudio: React.FC<{
 };
 
 // ==================== 带音频的场景组件 ====================
+
+const Scene00_Intro_WithAudio: React.FC = () => (
+  <SceneWithAudio sceneId="Scene00-Intro"><Scene00_Intro /></SceneWithAudio>
+);
 
 const Scene01_Title_WithAudio: React.FC = () => (
   <SceneWithAudio sceneId="Scene01-Title"><Scene01_Title /></SceneWithAudio>
@@ -239,6 +244,10 @@ export const RemotionRoot: React.FC = () => {
       />
 
       {/* 开场 Hook */}
+      <Folder name="00-片头">
+        <Composition id="Scene00-Intro" component={Scene00_Intro_WithAudio} durationInFrames={DEFAULT_DURATIONS['Scene00-Intro']} fps={FPS} width={WIDTH} height={HEIGHT} />
+      </Folder>
+
       <Folder name="01-开场">
         <Composition id="Scene01-Title" component={Scene01_Title_WithAudio} durationInFrames={DEFAULT_DURATIONS['Scene01-Title']} fps={FPS} width={WIDTH} height={HEIGHT} />
         <Composition id="Scene02-Features" component={Scene02_Features_WithAudio} durationInFrames={DEFAULT_DURATIONS['Scene02-Features']} fps={FPS} width={WIDTH} height={HEIGHT} />
@@ -300,6 +309,7 @@ export const RemotionRoot: React.FC = () => {
 const EP1Full: React.FC = () => {
   return (
     <Series>
+      <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene00-Intro']}><Scene00_Intro_WithAudio /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene01-Title']}><Scene01_Title_WithAudio /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene02-Features']}><Scene02_Features_WithAudio /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene03-TooMuchCode']}><Scene03_TooMuchCode_WithAudio /></Series.Sequence>
@@ -343,6 +353,7 @@ const EP1Full: React.FC = () => {
 const EP1FullNoAudio: React.FC = () => {
   return (
     <Series>
+      <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene00-Intro']}><Scene00_Intro /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene01-Title']}><Scene01_Title /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene02-Features']}><Scene02_Features /></Series.Sequence>
       <Series.Sequence durationInFrames={DEFAULT_DURATIONS['Scene03-TooMuchCode']}><Scene03_TooMuchCode /></Series.Sequence>

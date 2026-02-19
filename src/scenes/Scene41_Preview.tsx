@@ -1,6 +1,14 @@
-// 镜头 41: 下集预告
+// 镜头 41: 下集预告 + 个人IP结尾
 import React from 'react';
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring } from 'remotion';
+import {
+  AbsoluteFill,
+  useCurrentFrame,
+  useVideoConfig,
+  interpolate,
+  spring,
+  Img,
+  staticFile,
+} from 'remotion';
 import { colors } from '../lib/utils';
 import { fontFamily } from '../lib/fonts';
 
@@ -19,7 +27,7 @@ export const Scene41_Preview: React.FC = () => {
       style={{
         backgroundColor: colors.background,
         fontFamily,
-        padding: '110px',
+        padding: '80px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -29,9 +37,9 @@ export const Scene41_Preview: React.FC = () => {
       {/* 标题 */}
       <div
         style={{
-          fontSize: '45px',
+          fontSize: '40px',
           color: colors.textMuted,
-          marginBottom: '56px',
+          marginBottom: '40px',
           opacity: interpolate(frame, [0, 20], [0, 1], {
             extrapolateRight: 'clamp',
           }),
@@ -44,19 +52,19 @@ export const Scene41_Preview: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          gap: '84px',
-          marginBottom: '84px',
+          gap: '60px',
+          marginBottom: '50px',
         }}
       >
         {/* Proactive */}
         <div
           style={{
             backgroundColor: colors.surface,
-            borderRadius: '28px',
-            padding: '70px',
-            width: '490px',
+            borderRadius: '24px',
+            padding: '50px',
+            width: '420px',
             textAlign: 'center',
-            border: `4px solid ${colors.accent}`,
+            border: `3px solid ${colors.accent}`,
             transform: `scale(${spring({
               frame: frame - 20,
               fps,
@@ -64,18 +72,18 @@ export const Scene41_Preview: React.FC = () => {
             })})`,
           }}
         >
-          <div style={{ fontSize: '78px', marginBottom: '28px' }}>⚡</div>
+          <div style={{ fontSize: '60px', marginBottom: '20px' }}>⚡</div>
           <div
             style={{
-              fontSize: '50px',
+              fontSize: '42px',
               fontWeight: 700,
               color: colors.accent,
-              marginBottom: '21px',
+              marginBottom: '16px',
             }}
           >
             Proactive
           </div>
-          <div style={{ fontSize: '28px', color: colors.textMuted }}>
+          <div style={{ fontSize: '24px', color: colors.textMuted }}>
             主动执行机制
           </div>
         </div>
@@ -84,11 +92,11 @@ export const Scene41_Preview: React.FC = () => {
         <div
           style={{
             backgroundColor: colors.surface,
-            borderRadius: '28px',
-            padding: '70px',
-            width: '490px',
+            borderRadius: '24px',
+            padding: '50px',
+            width: '420px',
             textAlign: 'center',
-            border: `4px solid ${colors.secondary}`,
+            border: `3px solid ${colors.secondary}`,
             transform: `scale(${spring({
               frame: frame - 35,
               fps,
@@ -96,18 +104,18 @@ export const Scene41_Preview: React.FC = () => {
             })})`,
           }}
         >
-          <div style={{ fontSize: '78px', marginBottom: '28px' }}>📦</div>
+          <div style={{ fontSize: '60px', marginBottom: '20px' }}>📦</div>
           <div
             style={{
-              fontSize: '50px',
+              fontSize: '42px',
               fontWeight: 700,
               color: colors.secondary,
-              marginBottom: '21px',
+              marginBottom: '16px',
             }}
           >
             Skill
           </div>
-          <div style={{ fontSize: '28px', color: colors.textMuted }}>
+          <div style={{ fontSize: '24px', color: colors.textMuted }}>
             技能系统
           </div>
         </div>
@@ -118,8 +126,8 @@ export const Scene41_Preview: React.FC = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '28px',
-          marginBottom: '84px',
+          gap: '20px',
+          marginBottom: '50px',
         }}
       >
         {topics.map((topic, index) => {
@@ -133,7 +141,7 @@ export const Scene41_Preview: React.FC = () => {
             <div
               key={index}
               style={{
-                fontSize: '34px',
+                fontSize: '28px',
                 color: colors.text,
                 textAlign: 'center',
                 opacity: topicSpring,
@@ -146,22 +154,67 @@ export const Scene41_Preview: React.FC = () => {
         })}
       </div>
 
-      {/* 结尾 */}
+      {/* 结尾 - 个人IP展示 */}
       <div
         style={{
-          fontSize: '56px',
-          fontWeight: 700,
-          color: colors.accent,
-          textAlign: 'center',
-          opacity: interpolate(frame, [120, 140], [0, 1], {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          opacity: interpolate(frame, [120, 150], [0, 1], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
           }),
+          transform: `translateY(${interpolate(frame, [120, 150], [30, 0], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          })}px)`,
         }}
       >
-        这是最有意思的部分
-        <br />
-        我们下集见
+        {/* 头像 */}
+        <div
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            border: `3px solid ${colors.primary}`,
+            boxShadow: `0 0 20px ${colors.primary}40`,
+            marginBottom: 16,
+          }}
+        >
+          <Img
+            src={staticFile('assets/我.PNG')}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
+
+        {/* 名字 */}
+        <div
+          style={{
+            fontSize: '28px',
+            fontWeight: 700,
+            color: colors.text,
+            marginBottom: 8,
+          }}
+        >
+          熊老板i
+        </div>
+
+        {/* 结束语 */}
+        <div
+          style={{
+            fontSize: '36px',
+            fontWeight: 600,
+            color: colors.accent,
+            textAlign: 'center',
+          }}
+        >
+          这是最有意思的部分，我们下集见
+        </div>
       </div>
     </AbsoluteFill>
   );

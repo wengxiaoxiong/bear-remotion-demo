@@ -5,6 +5,7 @@
 
 // 默认时长（帧）- 当音频文件不存在时使用
 export const DEFAULT_DURATIONS: Record<string, number> = {
+  'Scene00-Intro': 90,
   'Scene01-Title': 124,
   'Scene02-Features': 409,
   'Scene03-TooMuchCode': 158,

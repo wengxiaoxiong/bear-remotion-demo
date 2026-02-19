@@ -1,4 +1,5 @@
 // 场景组件导出
+export { Scene00_Intro } from './Scene00_Intro';
 export { Scene01_Title } from './Scene01_Title';
 export { Scene02_Features } from './Scene02_Features';
 export { Scene03_TooMuchCode } from './Scene03_TooMuchCode';

@@ -1,4 +1,4 @@
-// 镜头 2: GitHub 仓库 + 功能图标条（主视觉放大、布局统一）
+// 镜头 2: GitHub 仓库对比展示 - OpenClaw vs NanoBot
 import React from 'react';
 import {
   AbsoluteFill,
@@ -12,18 +12,11 @@ import {
 import { colors } from '../lib/utils';
 import { fontFamily } from '../lib/fonts';
 
-const icons = [
-  { name: 'WhatsApp', file: 'whatsapp.png', color: '#25D366' },
-  { name: 'Telegram', file: 'telegram.png', color: '#0088cc' },
-  { name: 'Slack', file: 'slack.png', color: '#4A154B' },
-  { name: 'Email', file: 'gmail.png', color: '#EA4335' },
-];
-
 export const Scene02_Features: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, width } = useVideoConfig();
 
-  // 整体内容区缩放 + 淡入（从中心聚拢，更有冲击力）
+  // 整体内容区缩放 + 淡入
   const contentScale = spring({
     frame,
     fps,
@@ -34,49 +27,45 @@ export const Scene02_Features: React.FC = () => {
     extrapolateRight: 'clamp',
   });
 
-  // GitHub 卡片：略晚一点、带一点 Y 缓动
-  const cardOpacity = interpolate(frame, [5, 25], [0, 1], {
+  // OpenClaw 卡片动画
+  const openclawCardOpacity = interpolate(frame, [5, 25], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const cardY = interpolate(frame, [8, 28], [42, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: (x) => spring({ frame: x * 25, fps, config: { damping: 20 } }),
-  });
-
-  // 图标逐个亮起（横向一排，快速连续）
-  const getIconOpacity = (index: number) => {
-    const start = 28 + index * 6;
-    return interpolate(frame, [start, start + 12], [0, 1], {
-      extrapolateLeft: 'clamp',
-      extrapolateRight: 'clamp',
-    });
-  };
-  const getIconScale = (index: number) => {
-    const start = 28 + index * 6;
-    return spring({
-      frame: frame - start,
-      fps,
-      config: { damping: 14, stiffness: 180 },
-    });
-  };
-
-  // 代码行数数字滚动，最大40w
-  const lineCount = interpolate(frame, [45, 100], [0, 400000], {
+  const openclawCardX = interpolate(frame, [8, 28], [-60, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
 
-  // 底部标语
-  const taglineOpacity = interpolate(frame, [70, 90], [0, 1], {
+  // NanoBot 卡片动画（稍晚一点）
+  const nanobotCardOpacity = interpolate(frame, [20, 40], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const nanobotCardX = interpolate(frame, [23, 43], [60, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
 
-  // 主视觉宽度：占画面 72%，最大 900px，保证大图
-  const cardWidth = Math.min(width * 0.72, 900);
-  const padding = width < 600 ? 34 : 67;
+  // 代码行数数字滚动动画
+  const openclawLines = interpolate(frame, [45, 90], [0, 400000], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  const nanobotLines = interpolate(frame, [55, 100], [0, 4000], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  // 对比标签动画
+  const tagOpacity = interpolate(frame, [80, 100], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  // 卡片宽度
+  const cardWidth = Math.min(width * 0.42, 460);
+  const padding = width < 600 ? 20 : 40;
 
   return (
     <AbsoluteFill
@@ -88,125 +77,243 @@ export const Scene02_Features: React.FC = () => {
         padding: `${padding}px`,
       }}
     >
-      {/* 统一内容块：居中，主图在上、行数和平台图标分两行 */}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           width: '100%',
-          maxWidth: cardWidth + 112,
+          maxWidth: 1200,
           transform: `scale(${contentScale})`,
           opacity: contentOpacity,
         }}
       >
-        {/* 主视觉：大号 GitHub 卡片 */}
+        {/* 标题 */}
         <div
           style={{
-            width: '100%',
-            maxWidth: cardWidth,
-            backgroundColor: colors.surface,
-            borderRadius: '28px',
-            padding: width < 600 ? '28px' : '39px',
-            border: `1px solid ${colors.border}`,
-            boxShadow: '0 34px 67px rgba(0,0,0,0.4)',
-            opacity: cardOpacity,
-            transform: `translateY(${cardY}px)`,
+            fontSize: width < 600 ? 28 : 36,
+            color: colors.textMuted,
+            marginBottom: width < 600 ? 30 : 40,
+            textAlign: 'center',
+            opacity: interpolate(frame, [0, 15], [0, 1], {
+              extrapolateLeft: 'clamp',
+              extrapolateRight: 'clamp',
+            }),
           }}
         >
-          <Img
-            src={staticFile('assets/openclaw-github.png')}
-            style={{
-              width: '100%',
-              borderRadius: '17px',
-              display: 'block',
-            }}
-          />
+          两个项目的代码量对比
         </div>
 
-        {/* 下方统一信息条：分为"行数"一行+"平台icon"一行 */}
+        {/* 双卡片对比区域 */}
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: width < 900 ? 'column' : 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: width < 600 ? 17 : 28,
-            marginTop: width < 600 ? 28 : 39,
+            gap: width < 900 ? 30 : 50,
             width: '100%',
-            paddingLeft: 11,
-            paddingRight: 11,
           }}
         >
-          {/* 代码行数单独一行 */}
+          {/* OpenClaw 卡片 */}
           <div
             style={{
-              fontSize: width < 600 ? 31 : 39,
-              color: colors.textMuted,
-              whiteSpace: 'nowrap',
-              marginBottom: width < 600 ? 11 : 17,
-              textAlign: 'center',
               width: '100%',
+              maxWidth: cardWidth,
+              backgroundColor: colors.surface,
+              borderRadius: '24px',
+              padding: width < 600 ? '20px' : '28px',
+              border: `1px solid ${colors.border}`,
+              boxShadow: '0 24px 48px rgba(0,0,0,0.35)',
+              opacity: openclawCardOpacity,
+              transform: `translateX(${openclawCardX}px)`,
             }}
           >
-            <span
+            {/* 项目名称 */}
+            <div
               style={{
-                color: colors.accent,
+                fontSize: width < 600 ? 24 : 32,
                 fontWeight: 700,
-                fontSize: width < 600 ? 39 : 50,
+                color: colors.text,
+                marginBottom: 16,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
               }}
             >
-              {Math.floor(lineCount).toLocaleString()}
-            </span>{' '}
-            行代码
-          </div>
+              <span>🦞</span>
+              <span>OpenClaw</span>
+            </div>
 
-          {/* 平台图标单独一行（居中横排） */}
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: width < 600 ? 22 : 34,
-              width: '100%',
-            }}
-          >
-            {icons.map((icon, index) => (
+            {/* GitHub 截图 */}
+            <Img
+              src={staticFile('assets/openclaw-github.png')}
+              style={{
+                width: '100%',
+                borderRadius: '14px',
+                display: 'block',
+                marginBottom: 20,
+              }}
+            />
+
+            {/* 代码行数 */}
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '16px',
+                backgroundColor: 'rgba(255,206,133,0.1)',
+                borderRadius: '12px',
+                border: `1px solid ${colors.accent}40`,
+              }}
+            >
               <div
-                key={icon.name}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 14,
-                  opacity: getIconOpacity(index),
-                  transform: `scale(${getIconScale(index)})`,
+                  fontSize: width < 600 ? 36 : 48,
+                  fontWeight: 800,
+                  color: colors.accent,
+                  lineHeight: 1,
+                  letterSpacing: '-2px',
                 }}
               >
-                <Img
-                  src={staticFile(`assets/${icon.file}`)}
-                  style={{
-                    width: width < 600 ? 56 : 67,
-                    height: width < 600 ? 56 : 67,
-                    borderRadius: '14px',
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: width < 600 ? 25 : 31,
-                    color: colors.text,
-                    fontWeight: 500,
-                  }}
-                >
-                  {icon.name}
-                </span>
+                {Math.floor(openclawLines).toLocaleString()}
               </div>
-            ))}
+              <div
+                style={{
+                  fontSize: width < 600 ? 14 : 16,
+                  color: colors.textMuted,
+                  marginTop: 6,
+                }}
+              >
+                行代码
+              </div>
+            </div>
+          </div>
+
+          {/* 对比箭头（仅在桌面端显示） */}
+          {width >= 900 && (
+            <div
+              style={{
+                fontSize: '48px',
+                color: colors.textMuted,
+                opacity: interpolate(frame, [60, 80], [0, 1], {
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp',
+                }),
+                transform: `scale(${spring({
+                  frame: frame - 60,
+                  fps,
+                  config: { damping: 14, stiffness: 180 },
+                })})`,
+              }}
+            >
+              →
+            </div>
+          )}
+
+          {/* NanoBot 卡片 */}
+          <div
+            style={{
+              width: '100%',
+              maxWidth: cardWidth,
+              backgroundColor: colors.surface,
+              borderRadius: '24px',
+              padding: width < 600 ? '20px' : '28px',
+              border: `2px solid ${colors.primary}`,
+              boxShadow: `0 24px 48px rgba(0,0,0,0.35), 0 0 30px ${colors.primary}20`,
+              opacity: nanobotCardOpacity,
+              transform: `translateX(${nanobotCardX}px)`,
+            }}
+          >
+            {/* 项目名称 */}
+            <div
+              style={{
+                fontSize: width < 600 ? 24 : 32,
+                fontWeight: 700,
+                color: colors.primary,
+                marginBottom: 16,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+              }}
+            >
+              <span>🤖</span>
+              <span>NanoBot</span>
+            </div>
+
+            {/* GitHub 截图 */}
+            <Img
+              src={staticFile('assets/nanobot-github.png')}
+              style={{
+                width: '100%',
+                borderRadius: '14px',
+                display: 'block',
+                marginBottom: 20,
+              }}
+            />
+
+            {/* 代码行数 */}
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '16px',
+                backgroundColor: `${colors.primary}15`,
+                borderRadius: '12px',
+                border: `1px solid ${colors.primary}50`,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: width < 600 ? 36 : 48,
+                  fontWeight: 800,
+                  color: colors.primary,
+                  lineHeight: 1,
+                  letterSpacing: '-2px',
+                }}
+              >
+                {Math.floor(nanobotLines).toLocaleString()}
+              </div>
+              <div
+                style={{
+                  fontSize: width < 600 ? 14 : 16,
+                  color: colors.textMuted,
+                  marginTop: 6,
+                }}
+              >
+                行代码
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* 底部对比标签 */}
+        <div
+          style={{
+            marginTop: width < 600 ? 30 : 40,
+            padding: '16px 32px',
+            backgroundColor: colors.surface,
+            borderRadius: '12px',
+            border: `1px solid ${colors.border}`,
+            opacity: tagOpacity,
+            transform: `translateY(${interpolate(frame, [80, 100], [20, 0], {
+              extrapolateLeft: 'clamp',
+              extrapolateRight: 'clamp',
+            })}px)`,
+          }}
+        >
+          <span
+            style={{
+              fontSize: width < 600 ? 18 : 24,
+              color: colors.text,
+              fontWeight: 600,
+            }}
+          >
+            <span style={{ color: colors.accent }}>40万行</span>
+            <span style={{ color: colors.textMuted, margin: '0 12px' }}>→</span>
+            <span style={{ color: colors.primary }}>4,000行</span>
+            <span style={{ color: colors.textMuted, marginLeft: 12 }}>（仅1%代码量）</span>
+          </span>
+        </div>
       </div>
-
-
     </AbsoluteFill>
   );
 };
