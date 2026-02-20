@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>NanoBot EP1 Cover</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body { 
+    width: 800px; 
+    height: 450px; 
+    overflow: hidden; 
+  }
+
+  .bg-gradient {
+    background:
+      radial-gradient(ellipse 75% 65% at 25% 55%, rgba(0, 100, 200, 0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 55% at 88% 25%, rgba(100, 150, 255, 0.06) 0%, transparent 55%),
+      #040d06;
+  }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(100, 150, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(100, 150, 255, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse 88% 88% at 50% 50%, black 20%, transparent 100%);
+  }
+
+  .scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,0,0,0.1) 3px,
+      rgba(0,0,0,0.1) 4px
+    );
+  }
+
+  .text-glow-blue {
+    text-shadow: 0 0 30px rgba(100, 150, 255, 0.6), 0 0 60px rgba(100, 150, 255, 0.25);
+  }
+
+  .text-glow-blue-sm {
+    text-shadow: 0 0 20px rgba(100, 150, 255, 0.4);
+  }
+
+  .font-space-mono {
+    font-family: 'Space Mono', monospace;
+  }
+
+  .font-noto-sc {
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+</style>
+</head>
+<body>
+<div class="relative w-[800px] h-[450px] overflow-hidden bg-[#040d06]">
+  <!-- Background gradient -->
+  <div class="absolute inset-0 bg-gradient"></div>
+  
+  <!-- Grid pattern -->
+  <div class="absolute inset-0 grid-pattern"></div>
+  
+  <!-- CRT scanlines -->
+  <div class="absolute inset-0 scanlines pointer-events-none"></div>
+
+  <!-- Corner decorations -->
+  <div class="absolute top-[22px] left-[15%] w-[18px] h-[18px] border-t-2 border-l-2 border-[rgba(100,150,255,0.3)]"></div>
+  <div class="absolute top-[22px] right-[15%] w-[18px] h-[18px] border-t-2 border-r-2 border-[rgba(100,150,255,0.3)]"></div>
+  <div class="absolute bottom-[22px] left-[15%] w-[18px] h-[18px] border-b-2 border-l-2 border-[rgba(100,150,255,0.3)]"></div>
+  <div class="absolute bottom-[22px] right-[15%] w-[18px] h-[18px] border-b-2 border-r-2 border-[rgba(100,150,255,0.3)]"></div>
+
+  <!-- Main content -->
+  <div class="absolute left-[15%] right-[15%] top-0 bottom-0 flex flex-col justify-center items-center">
+    <div class="relative flex items-end gap-8 py-10">
+      <!-- Text content -->
+      <div class="flex flex-col items-start">
+        <!-- 动画学Agent - 重点突出，同一行 -->
+        <div class="font-noto-sc font-black text-[64px] leading-none text-white mb-8 tracking-[-0.02em] whitespace-nowrap">
+          动画学Agent
+        </div>
+        
+        <!-- 4000行复刻Clawdbot -->
+        <div class="font-noto-sc mt-4 font-black text-[48px] leading-[1.1] text-[rgba(200,220,255,0.95)] tracking-[-0.01em] mb-6 whitespace-nowrap">
+          <span>4000行代码复刻</span>
+          <div class="text-glow-blue-sm text-[64px]">
+            <span class="">Clawdbot</span>
+            <span class="text-[#5eb3ff]">🦞</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

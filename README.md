@@ -139,6 +139,25 @@ https://space.bilibili.com/25484432?spm_id_from=333.1007.0.0
 | 图标（SVG/PNG）| Iconify/品牌官网 | `assets/icons/` |
 | 终端录屏 | asciinema/手动录制 | `assets/recordings/` |
 | 头像/Logo | 官方渠道 | `assets/brand/` |
+| 封面图 | HTML 模板渲染 | `cover.png` |
+
+#### 封面图生成
+
+项目包含一个 HTML 封面模板（`cover.html`）和渲染脚本（`render-to-png.js`），用于生成视频封面图：
+
+```bash
+# 安装依赖（首次使用）
+pnpm add puppeteer
+
+# 渲染封面为 PNG
+node render-to-png.js
+```
+
+生成的 `cover.png` 为 800x450（16:9）比例，2x 分辨率（1600x900 像素），确保清晰度。
+
+**修改封面**：
+- 编辑 `cover.html` 中的样式和内容
+- 运行 `node render-to-png.js` 重新生成
 
 ---
 
@@ -302,6 +321,9 @@ ep1/
 │   └── Root.tsx            # Composition 配置
 ├── public/audio/           # TTS 音频（.gitignore）
 ├── assets/                 # 图片、录频等素材
+├── cover.html              # 封面 HTML 模板
+├── render-to-png.js        # 封面渲染脚本
+├── cover.png               # 生成的封面图
 ├── generate_tts.py         # TTS 生成脚本
 ├── .env                    # 火山引擎凭证（.gitignore）
 ├── ep1逐字稿.md            # 视频逐字稿
